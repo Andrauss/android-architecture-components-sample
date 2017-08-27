@@ -41,12 +41,16 @@ public class TaskDetailDialogFragment extends DialogFragment {
                     + " must implement TaskDialogListener");
         }
 
-        task = (Task) getArguments().getSerializable("task");
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View v = inflater.inflate(R.layout.dialogfragment_task_detail, null);
         editTextTitle = (EditText) v.findViewById(R.id.edittext_task_title);
         editTextDescription = (EditText) v.findViewById(R.id.edittext_task_description);
+        task = (Task) getArguments().getSerializable("task");
+        if (task != null) {
+            if (!task.getTitle().isEmpty()) editTextTitle.setText(task.getTitle());
+            if (!task.getDescription().isEmpty()) editTextDescription.setText(task.getDescription());
+        }
         builder.setView(v)
                 .setPositiveButton("Save", (dialog, id) -> {
                     //Do nothing here because we override this button later to change the close behaviour.
